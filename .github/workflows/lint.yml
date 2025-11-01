@@ -23,7 +23,7 @@ jobs:
         uses: ./.github/actions/setup-go
 
       - name: Run Linter
-        uses: golangci/golangci-lint-action@v6
+        uses: golangci/golangci-lint-action@v8
         with:
           version: v1.59.1
           args: >
