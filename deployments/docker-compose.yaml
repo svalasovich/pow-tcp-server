@@ -1,0 +1,7 @@
+version: '3.9'
+
+services:
+  golang-template:
+    image: svalasovich/golang-template:latest
+    ports:
+      - "9000:9000"

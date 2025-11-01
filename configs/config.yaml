@@ -1,0 +1,6 @@
+log:
+  level: debug
+  json-format: true
+monitoring:
+  server:
+    port: 9000

@@ -1,0 +1,44 @@
+---
+# configure golangci-lint
+# based on https://github.com/github/super-linter/blob/main/TEMPLATES/.golangci.yml
+issues:
+  exclude-dirs:
+    - test/mock
+  exclude-rules:
+    - path: _test\.go
+      linters:
+        - dupl
+        - gosec
+        - goconst
+linters:
+  enable:
+    - gofumpt
+    - gofmt
+    - goimports
+    - gosec
+    - gocyclo
+    - goconst
+    - gocritic
+    - govet
+    - revive
+    - protogetter
+linters-settings:
+  errcheck:
+    # report about assignment of errors to blank identifier: `num, _ := strconv.Atoi(numStr)`;
+    # default is false: such cases aren't reported by default.
+    check-blank: true
+  govet:
+    enable:
+      # report about shadowed variables
+      - shadow
+  gocyclo:
+    # minimal code complexity to report, 30 by default
+    min-complexity: 15
+  maligned:
+    # print struct with more effective memory layout or not, false by default
+    suggest-new: true
+  goimports:
+    # A comma-separated list of prefixes, which, if set, checks import paths
+    # with the given prefixes are grouped after 3rd-party packages.
+    # Default: ""
+    local-prefixes: github.com/svalasovich
