@@ -3,7 +3,6 @@ module github.com/svalasovich/pow-tcp-server
 go 1.23.0
 
 require (
-	github.com/AidosKuneen/cuckoo v0.0.0-20210309120000-d1ad3b942bbe
 	github.com/go-playground/validator/v10 v10.23.0
 	github.com/mitchellh/mapstructure v1.5.0
 	github.com/spf13/cobra v1.8.1

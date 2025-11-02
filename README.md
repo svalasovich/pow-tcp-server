@@ -22,12 +22,30 @@ Design and implement “Word of Wisdom” tcp server:
   collection of the quotes.
 - Docker file should be provided both for the server and for the client that solves the POW challenge
 
+## Documentation
+
+- [RFC Document](docs/RFC.md)
+
 ## How to build native
 
 ```shell
 make build
 ```
 
-## How to run
+## How to Build Docker & Run
+
+```shell
+make docker-client
+```
+
+```shell
+make docker-server
+```
+
+```shell
+make run
+```
+
+
 
 

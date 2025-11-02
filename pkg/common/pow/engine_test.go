@@ -56,39 +56,41 @@ func TestGenerateDataRandomness(t *testing.T) {
 	assert.Equal(t, complexity, data2[0])
 }
 
-func TestSerializeDeserializeNonce(t *testing.T) {
+func TestVerifyComplexity(t *testing.T) {
 	t.Parallel()
 
+	engine := NewEngine()
+
 	tests := []struct {
-		name   string
-		salt   []byte
-		proofs []uint32
+		name       string
+		complexity uint8
+		nonce      []byte
+		shouldPass bool
 	}{
 		{
-			name:   "basic case",
-			salt:   []byte{1, 2, 3, 4, 5, 6, 7, 8},
-			proofs: []uint32{100, 200, 300},
+			name:       "complexity 0 always passes",
+			complexity: 0,
+			nonce:      []byte{0, 0, 0, 0, 0, 0, 0, 1},
+			shouldPass: true,
 		},
 		{
-			name:   "empty proofs",
-			salt:   []byte{0, 0, 0, 0, 0, 0, 0, 0},
-			proofs: []uint32{},
-		},
-		{
-			name:   "large values",
-			salt:   []byte{255, 255, 255, 255, 255, 255, 255, 255},
-			proofs: []uint32{4294967295, 4294967294, 4294967293},
+			name:       "invalid nonce fails verification",
+			complexity: 10,
+			nonce:      []byte{0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF},
+			shouldPass: false,
 		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			nonce := serializeNonce(tt.salt, tt.proofs)
-			salt, proofs := deserializeNonce(nonce)
+			data := engine.GenerateData(tt.complexity)
+			result := engine.Verify(data, tt.nonce)
 
-			assert.Equal(t, tt.salt, salt)
-			require.Len(t, proofs, len(tt.proofs))
-			assert.Equal(t, tt.proofs, proofs)
+			if tt.shouldPass {
+				assert.True(t, result)
+			} else {
+				assert.False(t, result)
+			}
 		})
 	}
 }

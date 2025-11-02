@@ -40,13 +40,20 @@ test:
 lint:
 	docker run --rm -v ${PWD}:/app -w /app golangci/golangci-lint:v1.64.2 golangci-lint run --config=./.github/linters/.golangci.yml --timeout=5m
 
-#? docker: Build docker image
-.PHONY: docker
+#? docker-server: Build server docker image
+.PHONY: docker-server
 docker-server:
 	docker build -t svalasovich/server -f ./build/package/server.Dockerfile .
 
+#? docker-client: Build client docker image
+.PHONY: docker-client
 docker-client:
 	docker build -t svalasovich/client -f ./build/package/client.Dockerfile .
+
+#? run: Run Docker Compose
+.PHONY: run
+run:
+	docker compose -f deployments/docker-compose.yaml up
 
 help: Makefile
 	@echo ''

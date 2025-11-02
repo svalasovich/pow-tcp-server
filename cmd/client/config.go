@@ -19,7 +19,7 @@ type Config struct {
 }
 
 func InitFlags(cmd *cobra.Command) {
-	cmd.Flags().Duration("interval", time.Millisecond, "client fetch quote interval")
+	cmd.Flags().Duration("interval", time.Nanosecond, "client fetch quote interval")
 
 	cmd.Flags().Duration("tcp.deadline", 10*time.Second, "client connection deadline")
 	cmd.Flags().Duration("tcp.keep-alive", 10*time.Second, "client connection keep alive")
