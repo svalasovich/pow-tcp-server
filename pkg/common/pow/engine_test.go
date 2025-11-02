@@ -10,6 +10,8 @@ import (
 )
 
 func TestNewEngine(t *testing.T) {
+	t.Parallel()
+
 	engine := NewEngine()
 
 	require.NotNil(t, engine)
@@ -17,6 +19,8 @@ func TestNewEngine(t *testing.T) {
 }
 
 func TestGenerateData(t *testing.T) {
+	t.Parallel()
+
 	engine := NewEngine()
 
 	tests := []struct {
@@ -39,6 +43,8 @@ func TestGenerateData(t *testing.T) {
 }
 
 func TestGenerateDataRandomness(t *testing.T) {
+	t.Parallel()
+
 	engine := NewEngine()
 	complexity := uint8(10)
 
@@ -51,6 +57,8 @@ func TestGenerateDataRandomness(t *testing.T) {
 }
 
 func TestSerializeDeserializeNonce(t *testing.T) {
+	t.Parallel()
+
 	tests := []struct {
 		name   string
 		salt   []byte
@@ -86,16 +94,14 @@ func TestSerializeDeserializeNonce(t *testing.T) {
 }
 
 func TestSolveAndVerify(t *testing.T) {
-	if testing.Short() {
-		t.Skip("skipping solve test in short mode")
-	}
+	t.Parallel()
 
 	engine := NewEngine()
 	complexity := uint8(0) // Use low complexity for faster tests
 
 	data := engine.GenerateData(complexity)
 
-	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
 	defer cancel()
 
 	nonce, err := engine.Solve(ctx, data)

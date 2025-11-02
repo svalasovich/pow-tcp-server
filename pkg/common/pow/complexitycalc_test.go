@@ -8,6 +8,8 @@ import (
 )
 
 func TestNewAdaptiveComplexityCalculator(t *testing.T) {
+	t.Parallel()
+
 	cfg := Config{ComplexityStep: 100}
 	calc := NewAdaptiveComplexityCalculator(cfg)
 
@@ -16,6 +18,8 @@ func TestNewAdaptiveComplexityCalculator(t *testing.T) {
 }
 
 func TestAdaptiveComplexityCalculator_Calculate(t *testing.T) {
+	t.Parallel()
+
 	tests := []struct {
 		name           string
 		complexityStep uint
