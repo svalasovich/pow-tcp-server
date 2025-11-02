@@ -85,5 +85,5 @@ func verifyComplexity(complexity uint8, hash []byte) bool {
 		zeroBits += 8
 	}
 
-	return complexity <= uint8(zeroBits)
+	return int(complexity) <= zeroBits
 }

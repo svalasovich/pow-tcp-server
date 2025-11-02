@@ -4,6 +4,76 @@ To meet DDoS protection requirements, add a Proof-of-Work (PoW) algorithm on the
 
 ---
 
+# PoW Protocol Flow
+
+## Sequence Diagram
+
+```mermaid
+sequenceDiagram
+    participant Client
+    participant Server
+
+    Note over Client,Server: Connection Initiation
+    Client->>Server: TCP Connect
+
+    Note over Server: Calculate current difficulty k<br/>based on server load
+
+    Server->>Client: Challenge Response<br/>{challenge, k }
+
+    Note over Client: Solve PoW puzzle:<br/>Find nonce where<br/>Argon2id(challenge ‖ nonce)<br/>has k leading zero bits
+
+    Note over Client: Computational work<br/>(~2^k attempts)<br/>Memory-bound (m_cost)
+
+    Client->>Server: Solution<br/>{nonce, digest}
+
+    Note over Server: Verify solution:<br/>1. Check digest = Argon2id(challenge ‖ nonce)<br/>2. Verify k leading zero bits<br/>3. Check challenge freshness
+
+    alt Valid Solution
+        Server->>Client: Access Granted<br/>Session established
+        Note over Client,Server: Normal communication
+    else Invalid Solution
+        Server->>Client: Access Denied<br/>Connection closed
+        Note over Server: Reject & log attempt
+    end
+```
+
+## Flow Description
+
+### 1. **Connection Request**
+Client initiates TCP connection to server.
+
+### 2. **Challenge Issued**
+Server responds with PoW challenge containing:
+- **`challenge`**: Random bytes (e.g., 32 bytes)
+- **`k`**: Current difficulty (leading zero bits required)
+- **`m_cost`**: Memory cost parameter (64 MiB)
+- **`t_cost`**: Time cost parameter (3 iterations)
+
+### 3. **Client Computation**
+Client searches for a nonce such that:
+```
+Argon2id(challenge || nonce, m_cost, t_cost) → digest with k leading zero bits
+```
+Expected attempts: `~2^k` trials
+
+### 4. **Solution Submission**
+Client sends:
+- **`nonce`**: Found nonce value
+- **`digest`**: Computed Argon2id digest
+
+### 5. **Server Verification**
+Server performs:
+1. Recompute: `digest' = Argon2id(challenge || nonce, m_cost, t_cost)`
+2. Verify: `digest' == digest`
+3. Check: First `k` bits of digest are zero
+4. Validate: Challenge is recent (not expired/reused)
+
+### 6. **Access Decision**
+- ✅ **Valid**: Grant access, establish session
+- ❌ **Invalid**: Reject connection, log attempt
+
+---
+
 # Algorithm Options
 
 ## 1. HashCash
