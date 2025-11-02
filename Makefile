@@ -38,7 +38,7 @@ test:
 #? lint: Execute golang linter
 .PHONY: lint
 lint:
-	docker run --rm -v ${PWD}:/app -w /app golangci/golangci-lint:v2.0.0 golangci-lint run --config=./.github/linters/.golangci.yml --timeout=5m
+	docker run --rm -v ${PWD}:/app -w /app golangci/golangci-lint:v1.64.2 golangci-lint run --config=./.github/linters/.golangci.yml --timeout=5m
 
 #? docker: Build docker image
 .PHONY: docker

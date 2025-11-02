@@ -43,4 +43,4 @@ jobs:
           check_filenames: true
           check_hidden: true
           ignore_words_list: GoLab
-          exclude_file: go.sum,go.mod,quotes.txt
+          exclude_file: go.sum,go.mod,pkg/repository/quotes.txt
