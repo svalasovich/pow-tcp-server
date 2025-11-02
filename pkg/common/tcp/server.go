@@ -73,7 +73,9 @@ func (s *Server) listenConnections(ctx context.Context, listener *net.TCPListene
 			}
 		}
 
-		wg.Go(func() {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
 			connection := Connection{conn}
 			defer connection.Close()
 			defer cancel()
@@ -82,7 +84,7 @@ func (s *Server) listenConnections(ctx context.Context, listener *net.TCPListene
 			if err != nil {
 				s.logger.ErrorContext(ctx, "failed handle request", "error", err)
 			}
-		})
+		}()
 
 		select {
 		case <-ctx.Done():
