@@ -29,11 +29,9 @@ sequenceDiagram
     Note over Server: Verify solution:<br/>1. Check digest = Argon2id(challenge ‖ nonce)<br/>2. Verify k leading zero bits<br/>3. Check challenge freshness
 
     alt Valid Solution
-        Server->>Client: Access Granted<br/>Session established
-        Note over Client,Server: Normal communication
+        Server->>Client: Access Granted<br/>Quote provided
     else Invalid Solution
         Server->>Client: Access Denied<br/>Connection closed
-        Note over Server: Reject & log attempt
     end
 ```
 
