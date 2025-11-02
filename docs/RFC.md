@@ -26,7 +26,7 @@ sequenceDiagram
 
     Client->>Server: Solution<br/>{nonce, digest}
 
-    Note over Server: Verify solution:<br/>1. Check digest = Argon2id(challenge ‖ nonce)<br/>2. Verify k leading zero bits<br/>3. Check challenge freshness
+    Note over Server: Verify solution:<br/>1. Check digest = Argon2id(challenge ‖ nonce)<br/>2. Verify k leading zero bits<br/>
 
     alt Valid Solution
         Server->>Client: Access Granted<br/>Quote provided

@@ -7,6 +7,5 @@ services:
     image: svalasovich/client:latest
     environment:
       TCP__ADDRESS: "server:9000"
-      INTERVAL: "1s"
     depends_on:
       - server
