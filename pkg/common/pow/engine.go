@@ -8,9 +8,9 @@ import (
 	"math"
 	"math/bits"
 
+	"github.com/AidosKuneen/cuckoo"
 	"golang.org/x/crypto/blake2b"
 
-	"github.com/AidosKuneen/cuckoo"
 	"github.com/svalasovich/pow-tcp-server/internal/log"
 )
 
@@ -22,7 +22,7 @@ const (
 	startComplexity = 170 // experimentally determined that PoW typically terminates with a difficulty of ~170
 )
 
-var UnsolvedErr = errors.New("could not solve")
+var ErrUnsolved = errors.New("could not solve")
 
 type (
 	Engine struct {
@@ -66,7 +66,7 @@ func (e *Engine) Solve(ctx context.Context, data []byte) ([]byte, error) {
 		return serializeNonce(dataWithSalt[:uint64Size], proofs), nil
 	}
 
-	return nil, UnsolvedErr
+	return nil, ErrUnsolved
 }
 
 func (e *Engine) GenerateData(complexity uint8) []byte {

@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/spf13/cobra"
+
 	"github.com/svalasovich/pow-tcp-server/internal/config"
 	"github.com/svalasovich/pow-tcp-server/pkg/common/pow"
 	"github.com/svalasovich/pow-tcp-server/pkg/common/tcp"

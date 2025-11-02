@@ -8,6 +8,7 @@ import (
 	"syscall"
 
 	"github.com/spf13/cobra"
+
 	"github.com/svalasovich/pow-tcp-server/internal/config"
 	"github.com/svalasovich/pow-tcp-server/internal/log"
 )

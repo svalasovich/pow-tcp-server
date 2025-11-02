@@ -4,7 +4,7 @@ import (
 	"bufio"
 	"bytes"
 	_ "embed"
-	"math/rand"
+	"math/rand/v2"
 	"strings"
 )
 
@@ -33,5 +33,5 @@ func NewQuote() *Quote {
 }
 
 func (q *Quote) GetRandom() string {
-	return q.quotes[rand.Intn(len(q.quotes))]
+	return q.quotes[rand.IntN(len(q.quotes))] // #nosec G404 — pseudo random enough
 }

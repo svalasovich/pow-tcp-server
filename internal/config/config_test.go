@@ -6,6 +6,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+
 	"github.com/svalasovich/pow-tcp-server/internal/log"
 )
 
@@ -22,7 +23,7 @@ func TestInit(t *testing.T) {
 		{
 			name: "default values",
 			fixtures: testFixtures{
-				action: func(_ *cobra.Command, t *testing.T) {
+				action: func(_ *cobra.Command, _ *testing.T) {
 				},
 				asserts: func(t *testing.T, cfg Config, err error) {
 					expected := Config{
