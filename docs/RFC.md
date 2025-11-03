@@ -57,17 +57,14 @@ Expected attempts: `~2^k` trials
 ### 4. **Solution Submission**
 Client sends:
 - **`nonce`**: Found nonce value
-- **`digest`**: Computed Argon2id digest
 
 ### 5. **Server Verification**
 Server performs:
 1. Recompute: `digest' = Argon2id(challenge || nonce, m_cost, t_cost)`
-2. Verify: `digest' == digest`
-3. Check: First `k` bits of digest are zero
-4. Validate: Challenge is recent (not expired/reused)
+2. Check: First `k` bits of digest are zero
 
 ### 6. **Access Decision**
-- ✅ **Valid**: Grant access, establish session
+- ✅ **Valid**: Grant Quote
 - ❌ **Invalid**: Reject connection, log attempt
 
 ---
